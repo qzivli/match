@@ -9,11 +9,12 @@ This program was originally designed and implemented by Dan Friedman. It was red
 ## Example
 
 ```
-(import (edu indiana match))
+(import (rename (edu indiana match)
+                (guard ?)))
 
 (define (tree-sum expr)
   (match expr
-    [,x (guard (number? x)) x]
+    [,x (? (number? x)) x]
     [(,e1 ,e2)
      (let ([v1 (tree-sum e1)]
            [v2 (tree-sum e2)])
@@ -28,7 +29,7 @@ This program was originally designed and implemented by Dan Friedman. It was red
 #;(tree-sum '((1 2) (3 (4 #\5))))  ; error
 
 (match '(1 2 1 2 1)
-  [(,a ,b ,a ,b ,a) (guard (number? a) (number? b)) (+ a b)])  ; 3
+  [(,a ,b ,a ,b ,a) (? (number? a) (number? b)) (+ a b)])  ; 3
 
 (match '((1 2 3) 5 (1 2 3))
   [((,a ...) ,b (,a ...)) `(,a ... ,b)])  ; (1 2 3 5) or ((1 2 3) ... 5) ?
